@@ -1,9 +1,11 @@
 FROM rust:1.43 as builder
 WORKDIR /var/rustacean
 COPY . .
-RUN cargo build --release
+RUN apt-get update  && apt-get install musl-tools -y
+RUN rustup target add x86_64-unknown-linux-musl
+RUN cargo build --release --target x86_64-unknown-linux-musl
 
 FROM alpine
-WORKDIR /opt/rustacean
-COPY --from=builder /var/rustacean/target/release/rustacean .
-CMD ["./rustacean"]
+COPY --from=builder /var/rustacean/target/x86_64-unknown-linux-musl/release/rustacean /usr/local/bin/rustacean
+CMD ["rustacean"]
+
