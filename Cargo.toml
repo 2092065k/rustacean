@@ -2,6 +2,6 @@
 name = "rustacean"
 version = "0.1.0"
 authors = ["Ivan Kyosev"]
-edition = "2020"
+edition = "2018"
 
 [dependencies]
